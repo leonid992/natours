@@ -21,9 +21,6 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
-  console.log(
-    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-  );
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -56,7 +53,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 
   const url = `${req.protocol}://${req.get("host")}/me`;
-  console.log(url);
+  // console.log(url);
   await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
@@ -112,7 +109,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       )
     );
   }
-  console.log(decoded);
+  // console.log(decoded);
   if (freshUser.changePasswordAfter(decoded.iat)) {
     return next(
       new AppError("User recently changed password! Please log in again", 401)
@@ -136,7 +133,7 @@ exports.isLoggedIn = async (req, res, next) => {
       if (!freshUser) {
         return next();
       }
-      console.log(decoded);
+      //console.log(decoded);
       if (freshUser.changePasswordAfter(decoded.iat)) {
         return next();
       }

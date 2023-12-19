@@ -81,7 +81,7 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
     },
   ]);
 
-  console.log(tewst);
+  // console.log(tewst);
 
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(tourId, {
